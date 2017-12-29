@@ -1,0 +1,42 @@
+CREATE OR REPLACE FUNCTION insertIssue(issueId integer,issueGeneratedDate date,issueCategory varchar(20),
+issueDescription varchar(60))
+
+RETURNS integer AS $insertFlag$
+DECLARE 
+	flag integer := 0;
+ BEGIN	
+	INSERT INTO issue VALUES(issueId, issueGeneratedDate, issueCategory, issueDescription);
+	flag := 1;
+        RETURN flag;
+END;
+$insertFlag$  LANGUAGE plpgsql;
+
+
+*********************************************************************************************************************
+
+CREATE OR REPLACE FUNCTION DELETEISSUE(issueId_No int)
+RETURNS BOOLEAN AS $deleteFlag$
+DECLARE 
+	flag BOOLEAN;
+BEGIN
+	flag:=false;
+	DELETE FROM Issue WHERE issueId=issueId_no;
+	flag:=true;
+        RETURN flag;
+END;
+$deleteFlag$  LANGUAGE plpgsql
+
+*********************************************************************************************************************
+
+CREATE OR REPLACE FUNCTION UPDATEISSUE(issueId_No int,updatedIssueGeneratedDate date,updatedIssueCategory varchar(20),updatedIssueDescription varchar(60))
+RETURNS BOOLEAN AS $updateFlag$
+DECLARE 
+	flag BOOLEAN;
+BEGIN
+	flag:=false;
+	UPDATE Issue SET issueGeneratedDate=updatedIssueGeneratedDate,issueCategory=updatedIssueCategory,issueDescription=updatedIssueDescription WHERE issueId=issueId_No;
+	flag:=true;
+        RETURN flag;
+END;
+$updateFlag$  LANGUAGE plpgsql;
+
